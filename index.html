@@ -85,7 +85,14 @@
             <!-- Category: Satin scrunchies -->
             <h4 id="category-scrunchie" class="mb-4 fw-bold border-bottom pb-2 mt-5">স্যাটিন স্ক্রাঞ্চি (Satin scrunchies)</h4>
             <div class="row g-4 mb-5" id="scrunchie-container"></div>
-
+            
+            <!-- Category: Satin pillow cover -->
+            <h4 id="category-pillowcover" class="mb-4 fw-bold border-bottom pb-2 mt-5">স্যাটিন বালিশ কভার (Satin pillow Cover)</h4>
+            <div class="row g-4 mb-5" id="pillowcover-container"></div>
+            
+            <!-- Category: Satin hair bonnet -->
+            <h4 id="category-bonnet" class="mb-4 fw-bold border-bottom pb-2 mt-5">স্যাটিন স্লিপিং ক্যাপ (Satin hair bonnet)</h4>
+            <div class="row g-4 mb-5" id="bonnet-container"></div>
         </div>
     </section>
 
@@ -263,6 +270,8 @@
             const oilContainer = document.getElementById('oil-container');
             const packContainer = document.getElementById('pack-container');
             const scrunchieContainer = document.getElementById('scrunchie-container');
+            const pillowcoverContainer = document.getElementById('pillowcover-container');
+            const bonnetContainer = document.getElementById('bonnet-container');
 
             // productsDB এর সব প্রোডাক্ট একটা একটা করে চেক করা হবে
             for (let key in window.productsDB) {
@@ -296,9 +305,18 @@
                 else if (key.includes('pack')) {
                     if(packContainer) packContainer.innerHTML += cardHTML;
                 }
-                   else if (key.includes('scrunchie')) {
+                else if (key.includes('scrunchie')) {
                     if(scrunchieContainer) scrunchieContainer.innerHTML += cardHTML;
-                   }
+                }
+                else if (key.includes('pillowcover')) {
+                    if(pillowcoverContainer) pillowcoverContainer.innerHTML += cardHTML;
+                }
+                else if (key.includes('bonnet')) {
+                    if(bonnetContainer) bonnetContainer.innerHTML += cardHTML;
+                }
+                   
+                   
+            
             }
         });
     </script>
@@ -309,4 +327,3 @@
 </body>
 </html>
     
-
