@@ -13,9 +13,9 @@
         
     </head>
 <body>
-
-<!--nav bar-->
 <div id="navbar-placeholder"></div>
+
+
 
    
    
@@ -51,10 +51,6 @@
                 </div>
                 
             </div>
-                
-
-
-
             <button class="carousel-control-prev" type="button" data-bs-target="#offerCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(100%);"></span>
             </button>
@@ -63,6 +59,10 @@
             </button>
         </div>
     </header>
+                
+
+
+
 
     
 <!-- Products Section -->
@@ -72,21 +72,19 @@
             
             <!-- Category: Comb -->
             <h4 id="category-comb" class="mb-4 fw-bold border-bottom pb-2">চিরুনি (Comb)</h4>
-            <div class="row g-4 mb-5" id="comb-container">
-                <!-- জাভাস্ক্রিপ্ট এখানে চিরুনিগুলো বসাবে -->
-            </div>
+            <div class="row g-4 mb-5" id="comb-container"></div>
 
             <!-- Category: Oil -->
             <h4 id="category-oil" class="mb-4 fw-bold border-bottom pb-2 mt-5">তেল (Oil)</h4>
-            <div class="row g-4 mb-5" id="oil-container">
-                <!-- জাভাস্ক্রিপ্ট এখানে তেলগুলো বসাবে -->
-            </div>
+            <div class="row g-4 mb-5" id="oil-container"></div>
 
             <!-- Category: Hair Pack -->
             <h4 id="category-pack" class="mb-4 fw-bold border-bottom pb-2 mt-5">হেয়ার প্যাক (Hair Pack)</h4>
-            <div class="row g-4 mb-5" id="pack-container">
-                <!-- জাভাস্ক্রিপ্ট এখানে প্যাকগুলো বসাবে -->
-            </div>
+            <div class="row g-4 mb-5" id="pack-container"></div>
+            
+            <!-- Category: Satin scrunchies -->
+            <h4 id="category-scrunchie" class="mb-4 fw-bold border-bottom pb-2 mt-5">স্যাটিন স্ক্রাঞ্চি (Satin scrunchies)</h4>
+            <div class="row g-4 mb-5" id="scrunchie-container"></div>
 
         </div>
     </section>
@@ -264,6 +262,7 @@
             const combContainer = document.getElementById('comb-container');
             const oilContainer = document.getElementById('oil-container');
             const packContainer = document.getElementById('pack-container');
+            const scrunchieContainer = document.getElementById('scrunchie-container');
 
             // productsDB এর সব প্রোডাক্ট একটা একটা করে চেক করা হবে
             for (let key in window.productsDB) {
@@ -290,9 +289,13 @@
                     if(combContainer) combContainer.innerHTML += cardHTML;
                 } else if (key.includes('oil')) {
                     if(oilContainer) oilContainer.innerHTML += cardHTML;
-                } else if (key.includes('pack')) {
+                } 
+                else if (key.includes('pack')) {
                     if(packContainer) packContainer.innerHTML += cardHTML;
                 }
+                   else if (key.includes('scrunchie')) {
+                    if(scrunchieContainer) scrunchieContainer.innerHTML += cardHTML;
+                   }
             }
         });
     </script>
