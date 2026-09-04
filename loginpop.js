@@ -76,3 +76,20 @@ if (window.navbarIsReady) {
 } else {
     document.addEventListener('NavbarLoaded', setupNavbarLogic);
 }
+
+
+
+// পপ-আপ বন্ধ হওয়ার পর আটকে থাকা কালো স্ক্রিন বা ফ্রিজ হয়ে যাওয়া ফিক্স করার কোড
+document.addEventListener('click', function(e) {
+    // যদি ক্লোজ বাটন (X) অথবা পপ-আপের বাইরের কালো অংশে ক্লিক করা হয়
+    if (e.target.classList.contains('btn-close') || e.target.classList.contains('modal')) {
+        setTimeout(() => {
+            // পেজে যদি কোনো ফালতু ব্যাকড্রপ বা স্টাইল আটকে থাকে, তা মুছে ফেলবে
+            const backdrops = document.querySelectorAll('.modal-backdrop');
+            backdrops.forEach(b => b.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        }, 300);
+    }
+});
