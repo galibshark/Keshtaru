@@ -178,7 +178,6 @@
         
         
         
-        
         // =========================================================
         // ৩. ডাইরেক্ট অর্ডার (URL) বা কার্ট (Local Storage) থেকে ডেটা নেওয়া
         // =========================================================
@@ -188,13 +187,20 @@
 
         let shoppingCart = [];
 
+        // প্রাইস থেকে বাংলা লেখা ও ৳ চিহ্ন সরিয়ে শুধু আসল সংখ্যা বের করার ফাংশন
+        function getNumericPrice(priceStr) {
+            if (typeof priceStr === 'number') return priceStr;
+            let engStr = priceStr.replace(/[০-৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
+            return parseInt(engStr.replace(/\D/g, '')) || 0;
+        }
+
         // লজিক: যদি ডাইরেক্ট 'Order Now' থেকে আসে (লিংকে ID থাকে)
-        if (urlProductId && productsDB[urlProductId]) {
-            let p = productsDB[urlProductId];
+        if (urlProductId && window.productsDB[urlProductId]) {
+            let p = window.productsDB[urlProductId];
             shoppingCart = [{
                 id: urlProductId,
                 name: p.name,
-                price: p.price,
+                price: getNumericPrice(p.price), // এই ফাংশনটি এখন আসল সংখ্যা বের করে নেবে!
                 image: p.image,
                 qty: urlQty
             }];
@@ -202,6 +208,8 @@
             // আর যদি কার্ট থেকে আসে (লিংকে ID না থাকে)
             shoppingCart = JSON.parse(localStorage.getItem('keshtaru_cart')) || [];
         }
+
+        
 
         // যদি দুটোই ফাঁকা থাকে, তবেই বের করে দেবে
         if (shoppingCart.length === 0) {
