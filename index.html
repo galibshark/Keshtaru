@@ -425,29 +425,25 @@
         // ইউজার লগইন করা আছে কিনা চেক করা  // ইউজার লগইন করা আছে কিনা চেক করা // ইউজার লগইন করা আছে কিনা চেক করা
 
 
+// ন্যাভবার লোড হওয়ার সিগন্যাল পেলেই প্রোফাইল বাটন কাজ করবে
+        document.addEventListener('NavbarLoaded', function() {
+            const profileBtn = document.getElementById('profile-btn');
+            
+            onAuthStateChanged(auth, (user) => {
+                isUserLoggedIn = !!user; 
+                if (user) {
+                    if(profileBtn) profileBtn.classList.add('text-success', 'fw-bold');
+                } else {
+                    if(profileBtn) profileBtn.classList.remove('text-success', 'fw-bold');
+                }
+            });
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                isUserLoggedIn = true;
-                profileBtn.classList.add('text-success'); // লগইন থাকলে আইকন সবুজ হয়ে যাবে
-            } else {
-                isUserLoggedIn = false;
-                profileBtn.classList.remove('text-success');
-            }
-        });
-
-
-
-        // প্রোফাইল আইকনে ক্লিক করার লজিক  // প্রোফাইল আইকনে ক্লিক করার লজিক  // প্রোফাইল আইকনে ক্লিক করার লজিক
-        profileBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (isUserLoggedIn) {
-                // লগইন করা থাকলে ড্যাশবোর্ডে যাবে
-                window.location.href = "dashboard.html";
-            } else {
-                // লগইন না থাকলে পপ-আপ ওপেন হবে
-                var authModal = new bootstrap.Modal(document.getElementById('authModal'));
-                authModal.show();
+            if(profileBtn) {
+                profileBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (isUserLoggedIn) { window.location.href = "dashboard.html"; } 
+                    else { var authModal = new bootstrap.Modal(document.getElementById('authModal')); authModal.show(); }
+                });
             }
         });
 
@@ -458,45 +454,36 @@
 
 
 
-        // পপ-আপ থেকে লগইন করা
-        document.getElementById('modal-login-form').addEventListener('submit', function() {
-            const btn = document.getElementById('modal-login-btn');
-            btn.innerHTML = "লগইন হচ্ছে... ⏳";
-            const email = document.getElementById('modal-login-email').value;
-            const password = document.getElementById('modal-login-password').value;
+        // ন্যাভবার লোড হওয়ার পর ফর্ম সাবমিট কাজ করবে
+        document.addEventListener('NavbarLoaded', function() {
+            
+            document.getElementById('modal-login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const btn = document.getElementById('modal-login-btn');
+                btn.innerHTML = "লগইন হচ্ছে... ⏳";
+                const email = document.getElementById('modal-login-email').value;
+                const password = document.getElementById('modal-login-password').value;
 
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // লগইন হলে ড্যাশবোর্ডে পাঠিয়ে দেবে
-                    window.location.href = "dashboard.html"; 
-                })
-                .catch((error) => {
-                    alert("ইমেইল অথবা পাসওয়ার্ড ভুল হয়েছে!");
-                    btn.innerHTML = "লগইন";
-                });
-        });
+                signInWithEmailAndPassword(auth, email, password)
+                    .then(() => { location.reload(); }) 
+                    .catch(() => { alert("ইমেইল অথবা পাসওয়ার্ড ভুল হয়েছে!"); btn.innerHTML = "লগইন"; });
+            });
 
+            document.getElementById('modal-register-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const btn = document.getElementById('modal-reg-btn');
+                btn.innerHTML = "অ্যাকাউন্ট তৈরি হচ্ছে... ⏳";
+                const name = document.getElementById('modal-reg-name').value;
+                const email = document.getElementById('modal-reg-email').value;
+                const password = document.getElementById('modal-reg-password').value;
 
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        updateProfile(userCredential.user, { displayName: name }).then(() => { location.reload(); });
+                    })
+                    .catch((error) => { alert("সমস্যা হয়েছে: " + error.message); btn.innerHTML = "অ্যাকাউন্ট খুলুন"; });
+            });
 
-        // পপ-আপ থেকে নতুন অ্যাকাউন্ট খোলা
-        document.getElementById('modal-register-form').addEventListener('submit', function() {
-            const btn = document.getElementById('modal-reg-btn');
-            btn.innerHTML = "অ্যাকাউন্ট তৈরি হচ্ছে... ⏳";
-            const name = document.getElementById('modal-reg-name').value;
-            const email = document.getElementById('modal-reg-email').value;
-            const password = document.getElementById('modal-reg-password').value;
-
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    updateProfile(userCredential.user, { displayName: name }).then(() => {
-                        alert("অভিনন্দন! আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।");
-                        window.location.href = "dashboard.html"; 
-                    });
-                })
-                .catch((error) => {
-                    alert("দুঃখিত, সমস্যা হয়েছে: " + error.message);
-                    btn.innerHTML = "অ্যাকাউন্ট খুলুন";
-                });
         });
     </script>
     <script src="cart.js"></script>
