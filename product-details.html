@@ -417,50 +417,6 @@
         }
 
 
-
-        // ==========================================
-        // পপ-আপ থেকে লগইন ও রেজিস্ট্রেশন করার লজিক
-        // ==========================================
-
-        // ন্যাভবার লোড হওয়ার পর ফর্ম সাবমিট কাজ করবে
-        document.addEventListener('NavbarLoaded', function() {
-            
-            document.getElementById('modal-login-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const btn = document.getElementById('modal-login-btn');
-                btn.innerHTML = "লগইন হচ্ছে... ⏳";
-                const email = document.getElementById('modal-login-email').value;
-                const password = document.getElementById('modal-login-password').value;
-
-                signInWithEmailAndPassword(auth, email, password)
-                    .then(() => { location.reload(); }) 
-                    .catch(() => { alert("ইমেইল অথবা পাসওয়ার্ড ভুল হয়েছে!"); btn.innerHTML = "লগইন"; });
-            });
-
-            document.getElementById('modal-register-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const btn = document.getElementById('modal-reg-btn');
-                btn.innerHTML = "অ্যাকাউন্ট তৈরি হচ্ছে... ⏳";
-                const name = document.getElementById('modal-reg-name').value;
-                const email = document.getElementById('modal-reg-email').value;
-                const password = document.getElementById('modal-reg-password').value;
-
-                createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        updateProfile(userCredential.user, { displayName: name }).then(() => { location.reload(); });
-                    })
-                    .catch((error) => { alert("সমস্যা হয়েছে: " + error.message); btn.innerHTML = "অ্যাকাউন্ট খুলুন"; });
-            });
-
-        });
-
-
-        ///===========================//=========================================//
-
-
-
-
-        
         // লাইটবক্সে ক্লিক করা ছবিতে যাওয়ার ফাংশন
         function goToSlide(index) {
             const carouselElement = document.getElementById('reviewCarousel');
@@ -475,6 +431,4 @@
         <script type="module" src="loginpop.js"></script>
  </body>
 </html>
-    
-
         
