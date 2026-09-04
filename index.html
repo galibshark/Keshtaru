@@ -267,8 +267,11 @@
             // productsDB এর সব প্রোডাক্ট একটা একটা করে চেক করা হবে
             for (let key in window.productsDB) {
                 
-                // ডিসপ্লে প্রোডাক্টটা (৯০০ টাকার কম্বো) আমরা গ্রিডে দেখাব না, তাই স্কিপ করলাম
-                if(key === "900 taka") continue; 
+                
+                    // const displayProducts = ["900 taka", "combo-1", "combo-2", "combo-3", "combo-4", "combo-5"];
+                   // if (displayProducts.includes(key)) continue;
+
+
 
                 let p = window.productsDB[key];
                 
