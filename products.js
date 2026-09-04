@@ -178,8 +178,18 @@ window.productsDB = {
             price: "৳ ৩৫০",
             image: "image/Satin pillow cover/light pink.jpg",
             description: "চুল পড়া রোধ এবং ত্বকের যত্নে প্রিমিয়াম কোয়ালিটির স্যাটিন পিলোকভার। এটি সাধারণ সুতির বালিশের কভারের মতো চুলের আর্দ্রতা শুষে নেয় না, ফলে চুল থাকে জটমুক্ত ও ঝলমলে। ত্বক থাকে সুরক্ষিত।"
-    
+        }, 
+    // Category: Satin Hair Bonnet
+        
+        "pink-bonnet": {
+            name: "Pink Satin Hair Bonnet",
+            price: "৳ ২৫০",
+            image: "image/Satin hair bonnet/pink.jpg",
+            description: "রাতে ঘুমানোর সময় বালিশের সাথে ঘর্ষণ রোধ করে চুল পড়া ও ফ্রিজ কমানোর জন্য প্রিমিয়াম স্যাটিন হেয়ার বনেট। এটি চুলের আর্দ্রতা ধরে রাখে এবং জট পাকানো থেকে রক্ষা করে।"
         }
+    
+        
+        
 
     };
 
