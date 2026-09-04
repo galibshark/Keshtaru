@@ -167,3 +167,9 @@ Dashboard Page Styles
 .status-pending { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
 .status-cancelled { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 .status-delivered { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+/* ন্যাভবার প্লেসহোল্ডারকে স্টিকি করার কোড */
+#navbar-placeholder {
+    position: sticky;
+    top: 0;
+    z-index: 1040; /* যাতে অন্য সবকিছুর ওপরে থাকে */
+}
