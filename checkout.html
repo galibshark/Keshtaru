@@ -317,9 +317,7 @@
                 orderBtn.innerHTML = "অর্ডার সাবমিট হচ্ছে... ⏳";
                 orderBtn.disabled = true;
 
-                let baseUrl = window.location.href.split('checkout.html')[0];
-                let productFullUrl = baseUrl + "product-details.html?id=" + productId;
-
+                
                 try {
                     const finalEmail = currentUserEmail ? currentUserEmail : email;
 
