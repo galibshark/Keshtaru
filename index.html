@@ -230,22 +230,11 @@
 
     <!-- ফায়ারবেস অথেনটিকেশন ও পপ-আপ লজিক -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        
         import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // আপনার ফায়ারবেস কনফিগ
-        const firebaseConfig = {
-            apiKey: "AIzaSyAiyQ8hO4YsTLMkN2z8bCuKMnq5xuCcGBY",
-            authDomain: "keshtaru-8cf82.firebaseapp.com",
-            projectId: "keshtaru-8cf82",
-            storageBucket: "keshtaru-8cf82.firebasestorage.app",
-            messagingSenderId: "933852183012",
-            appId: "1:933852183012:web:615ddbfe64e5b0d9a2eff1",
-            measurementId: "G-P14WTYC8QS"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+        // আমাদের নতুন কনফিগ ফাইল থেকে auth এবং db টেনে আনছি
+        import { auth } from './firebase-config.js';
 
         let isUserLoggedIn = false;
         const profileBtn = document.getElementById('profile-btn');
