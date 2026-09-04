@@ -270,34 +270,28 @@
 
 
 
-        // ইউজার লগইন করা আছে কিনা চেক করা  // ইউজার লগইন করা আছে কিনা চেক করা // ইউজার লগইন করা আছে কিনা চেক করা
-        // ইউজার লগইন করা আছে কিনা চেক করা  // ইউজার লগইন করা আছে কিনা চেক করা // ইউজার লগইন করা আছে কিনা চেক করা
-
-        // লগইন চেক এবং প্রোফাইল বাটনের কালার লজিক
-        onAuthStateChanged(auth, (user) => {
-            isUserLoggedIn = !!user; // লগইন থাকলে true হবে
+        // ন্যাভবার লোড হওয়ার সিগন্যাল পেলেই প্রোফাইল বাটন কাজ করবে
+        document.addEventListener('NavbarLoaded', function() {
             const profileBtn = document.getElementById('profile-btn');
-            if (user) {
-                if(profileBtn) profileBtn.classList.add('text-success', 'fw-bold'); // লগইন থাকলে আইকন সবুজ হবে
-            } else {
-                if(profileBtn) profileBtn.classList.remove('text-success', 'fw-bold');
+            
+            onAuthStateChanged(auth, (user) => {
+                isUserLoggedIn = !!user; 
+                if (user) {
+                    if(profileBtn) profileBtn.classList.add('text-success', 'fw-bold');
+                } else {
+                    if(profileBtn) profileBtn.classList.remove('text-success', 'fw-bold');
+                }
+            });
+
+            if(profileBtn) {
+                profileBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (isUserLoggedIn) { window.location.href = "dashboard.html"; } 
+                    else { var authModal = new bootstrap.Modal(document.getElementById('authModal')); authModal.show(); }
+                });
             }
         });
-
-        // প্রোফাইল আইকনে ক্লিক করার লজিক
-        document.getElementById('profile-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (isUserLoggedIn) {
-                window.location.href = "dashboard.html"; // লগইন করা থাকলে সোজা ড্যাশবোর্ডে যাবে
-            } else {
-                var authModal = new bootstrap.Modal(document.getElementById('authModal'));
-                authModal.show(); // লগইন না থাকলে পপ-আপ আসবে
-            }
-        });
-
         
-        // ইউজার লগইন করা আছে কিনা চেক করা  // ইউজার লগইন করা আছে কিনা চেক করা // ইউজার লগইন করা আছে কিনা চেক করা
-        // ইউজার লগইন করা আছে কিনা চেক করা  // ইউজার লগইন করা আছে কিনা চেক করা // ইউজার লগইন করা আছে কিনা চেক করা
 
 
 
@@ -661,39 +655,36 @@
         // পপ-আপ থেকে লগইন ও রেজিস্ট্রেশন করার লজিক
         // ==========================================
 
-        document.getElementById('modal-login-form').addEventListener('submit', function() {
-            const btn = document.getElementById('modal-login-btn');
-            btn.innerHTML = "লগইন হচ্ছে... ⏳";
-            const email = document.getElementById('modal-login-email').value;
-            const password = document.getElementById('modal-login-password').value;
+        // ন্যাভবার লোড হওয়ার পর ফর্ম সাবমিট কাজ করবে
+        document.addEventListener('NavbarLoaded', function() {
+            
+            document.getElementById('modal-login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const btn = document.getElementById('modal-login-btn');
+                btn.innerHTML = "লগইন হচ্ছে... ⏳";
+                const email = document.getElementById('modal-login-email').value;
+                const password = document.getElementById('modal-login-password').value;
 
-            signInWithEmailAndPassword(auth, email, password)
-                .then(() => { 
-                    location.reload(); // লগইন সফল হলে পেজটা রিফ্রেশ হবে
-                }) 
-                .catch(() => {
-                    alert("ইমেইল অথবা পাসওয়ার্ড ভুল হয়েছে!");
-                    btn.innerHTML = "লগইন";
-                });
-        });
+                signInWithEmailAndPassword(auth, email, password)
+                    .then(() => { location.reload(); }) 
+                    .catch(() => { alert("ইমেইল অথবা পাসওয়ার্ড ভুল হয়েছে!"); btn.innerHTML = "লগইন"; });
+            });
 
-        document.getElementById('modal-register-form').addEventListener('submit', function() {
-            const btn = document.getElementById('modal-reg-btn');
-            btn.innerHTML = "অ্যাকাউন্ট তৈরি হচ্ছে... ⏳";
-            const name = document.getElementById('modal-reg-name').value;
-            const email = document.getElementById('modal-reg-email').value;
-            const password = document.getElementById('modal-reg-password').value;
+            document.getElementById('modal-register-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const btn = document.getElementById('modal-reg-btn');
+                btn.innerHTML = "অ্যাকাউন্ট তৈরি হচ্ছে... ⏳";
+                const name = document.getElementById('modal-reg-name').value;
+                const email = document.getElementById('modal-reg-email').value;
+                const password = document.getElementById('modal-reg-password').value;
 
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    updateProfile(userCredential.user, { displayName: name }).then(() => {
-                        location.reload(); // অ্যাকাউন্ট খোলা সফল হলে পেজ রিফ্রেশ হবে
-                    });
-                })
-                .catch((error) => {
-                    alert("সমস্যা হয়েছে: " + error.message);
-                    btn.innerHTML = "অ্যাকাউন্ট খুলুন";
-                });
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        updateProfile(userCredential.user, { displayName: name }).then(() => { location.reload(); });
+                    })
+                    .catch((error) => { alert("সমস্যা হয়েছে: " + error.message); btn.innerHTML = "অ্যাকাউন্ট খুলুন"; });
+            });
+
         });
 
 
