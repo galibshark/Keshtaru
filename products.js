@@ -148,8 +148,42 @@ window.productsDB = {
             price: "৳ ৫০",
             image: "image/Satin scrunchies/rust.jpg",
             description: "hellooo"
+        },
+        
+        
+    // Category: Satin Pillow Cover
+        "black-pillowcover": {
+            name: "Black Satin Pillow Cover",
+            price: "৳ ৩৫০",
+            image: "image/Satin pillow cover/black.jpg",
+            description: "চুল পড়া রোধ এবং ত্বকের যত্নে প্রিমিয়াম কোয়ালিটির স্যাটিন পিলোকভার। এটি সাধারণ সুতির বালিশের কভারের মতো চুলের আর্দ্রতা শুষে নেয় না, ফলে চুল থাকে জটমুক্ত ও ঝলমলে। ত্বক থাকে সুরক্ষিত।"
+        },
+        
+        "gold-pillowcover": {
+            name: "Gold Satin Pillow Cover",
+            price: "৳ ৩৫০",
+            image: "image/Satin pillow cover/gold.jpg",
+            description: "চুল পড়া রোধ এবং ত্বকের যত্নে প্রিমিয়াম কোয়ালিটির স্যাটিন পিলোকভার। এটি সাধারণ সুতির বালিশের কভারের মতো চুলের আর্দ্রতা শুষে নেয় না, ফলে চুল থাকে জটমুক্ত ও ঝলমলে। ত্বক থাকে সুরক্ষিত।"
+        },
+        
+        "peach-pillowcover": {
+            name: "Peach Satin Pillow Cover",
+            price: "৳ ৩৫০",
+            image: "image/Satin pillow cover/peach.jpg",
+            description: "চুল পড়া রোধ এবং ত্বকের যত্নে প্রিমিয়াম কোয়ালিটির স্যাটিন পিলোকভার। এটি সাধারণ সুতির বালিশের কভারের মতো চুলের আর্দ্রতা শুষে নেয় না, ফলে চুল থাকে জটমুক্ত ও ঝলমলে। ত্বক থাকে সুরক্ষিত।"
+        },
+        
+        "lightpink-pillowcover": {
+            name: "Light Pink Satin Pillow Cover",
+            price: "৳ ৩৫০",
+            image: "image/Satin pillow cover/light pink.jpg",
+            description: "চুল পড়া রোধ এবং ত্বকের যত্নে প্রিমিয়াম কোয়ালিটির স্যাটিন পিলোকভার। এটি সাধারণ সুতির বালিশের কভারের মতো চুলের আর্দ্রতা শুষে নেয় না, ফলে চুল থাকে জটমুক্ত ও ঝলমলে। ত্বক থাকে সুরক্ষিত।"
+    
         }
+
     };
+
+
     
     
     
