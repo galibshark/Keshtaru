@@ -247,24 +247,11 @@
 
         //log in check  //log in check  //log in check  //log in check  //log in check
 
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyAiyQ8hO4YsTLMkN2z8bCuKMnq5xuCcGBY",
-            authDomain: "keshtaru-8cf82.firebaseapp.com",
-            projectId: "keshtaru-8cf82",
-            storageBucket: "keshtaru-8cf82.firebasestorage.app",
-            messagingSenderId: "933852183012",
-            appId: "1:933852183012:web:615ddbfe64e5b0d9a2eff1",
-            measurementId: "G-P14WTYC8QS"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+        import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { auth } from './firebase-config.js';
         let isUserLoggedIn = false;
+        
+        
         
 
 
