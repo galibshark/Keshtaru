@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keshtaru - কেশতরু</title>
+    <!-- Favicon / Browser Tab Icon -->
+    <link rel="icon" type="image/png" href="image/logo.png">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-custom { background-color: #2c4c3b; }
+        .brand-logo { height: 65px; object-fit: contain; }
+        .carousel-item img { 
+            width: 100%; 
+            aspect-ratio: 3 / 1; 
+            object-fit: cover; 
+            object-position: center;
+            background-color: #f8f9fa;
+        }
+         
+        .product-card { transition: 0.3s; overflow: hidden; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+        .product-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background-color: #fff; }
+        
+        
+        html {overflow-y: scroll;}
+        /* স্মুথ স্ক্রল এবং ন্যাভবার যেন কন্টেন্ট ঢেকে না দেয় */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px; /* স্টিকি ন্যাভবারের জন্য জায়গা ছাড়বে */
+            overflow-y: scroll;
+        }
+
+        /* মেইন মেনুর আইটেমগুলোর মাঝখানে গ্যাপ */
+        .navbar-nav .nav-item {
+            margin-right: 25px; 
+        }
+
+        /* Hover Dropdown Effect (শুধু ডেক্সটপের জন্য) */
+        @media all and (min-width: 992px) {
+            .navbar .nav-item.dropdown:hover .dropdown-menu {
+                display: block;
+                margin-top: 0;
+                transition: 0.3s;
+            }
+        }
+        
+        /* মোবাইল মেনুর (Offcanvas) ভেতরের লিংকগুলোর কালার ঠিক রাখতে */
+        .offcanvas-custom { background-color: #2c4c3b; }
+
+        /* ড্রপডাউন মেনুর প্রিমিয়াম ডিজাইন (সবুজ থিম এবং লাইন সেপারেটর) */
+        .custom-dropdown {
+            background-color: #2c4c3b;
+            border: 1px solid #1f3629;
+            border-radius: 8px;
+            padding: 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .custom-dropdown .dropdown-item {
+            color: #e9ecef;
+            padding: 12px 20px;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255,255,255,0.1); /* সেপারেটর লাইন */
+            transition: 0.3s;
+        }
+        .custom-dropdown li:last-child .dropdown-item {
+            border-bottom: none; /* শেষের আইটেমে লাইন থাকবে না */
+        }
+        .custom-dropdown .dropdown-item:hover {
+            background-color: #1f3629; 
+            color: #ffffff;
+            padding-left: 28px; /* হোভার করলে দারুণভাবে একটু ডানে সরবে */
+        }
+
+        
+        
+        /* =========================================
+           ফ্লোটিং কার্ট বাটন ও জাদুকরী পপ-আপ এনিমেশন
+        ========================================= */
+        .cart-fab {
+            position: fixed; bottom: 30px; right: 30px; z-index: 1040;
+            background-color: #2c4c3b; color: white; border-radius: 50%;
+            width: 65px; height: 65px; display: flex; justify-content: center; align-items: center;
+            font-size: 28px; cursor: pointer; box-shadow: 0 4px 15px rgba(44, 76, 59, 0.5);
+            animation: pulse-glow 2s infinite; transition: 0.3s;
+        }
+        .cart-fab:hover { transform: scale(1.1); }
+        
+        .cart-badge {
+            position: absolute; top: -5px; right: -5px; background: #dc3545; color: white;
+            font-size: 14px; font-weight: bold; width: 25px; height: 25px;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid white;
+        }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(44, 76, 59, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(44, 76, 59, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(44, 76, 59, 0); }
+        }
+
+        /* ম্যাজিক কার্ট ওভারলে */
+        .magic-cart-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1050;
+            opacity: 0; visibility: hidden; transition: 0.4s;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .magic-cart-overlay.active { opacity: 1; visibility: visible; }
+
+        /* আলাদিনের প্রদীপের এনিমেশন (Scale & Translate) */
+        .magic-cart-box {
+            background: white; width: 90%; max-width: 450px; border-radius: 15px; padding: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3); max-height: 85vh; display: flex; flex-direction: column;
+            transform: scale(0.1) translate(40vw, 40vh); /* বাটন থেকে শুরু হবে */
+            opacity: 0; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
+        }
+        .magic-cart-overlay.active .magic-cart-box {
+            transform: scale(1) translate(0, 0); /* মাঝখানে চলে আসবে */
+            opacity: 1;
+        }
+
+        /* ভেতরের প্রোডাক্ট ডিজাইন (Aesthetic Separation) */
+        .cart-items-container { overflow-y: auto; flex-grow: 1; margin: 15px 0; padding-right: 5px; }
+        .cart-items-container::-webkit-scrollbar { width: 5px; }
+        .cart-items-container::-webkit-scrollbar-thumb { background: #2c4c3b; border-radius: 5px; }
+        
+        .cart-item {
+            display: flex; align-items: center; gap: 15px; padding: 12px;
+            border-radius: 12px; border: 1px solid #e9ecef; margin-bottom: 12px;
+            background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.02); transition: 0.3s;
+        }
+        .cart-item:hover { border-color: #2c4c3b; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .cart-item img { width: 65px; height: 65px; object-fit: cover; border-radius: 8px; border: 1px solid #eee; }
+        
+        .cart-qty-btn { border: 1px solid #2c4c3b; background: white; color: #2c4c3b; width: 28px; height: 28px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s;}
+        .cart-qty-btn:hover { background: #2c4c3b; color: white; }
+        .cart-item-delete { color: #dc3545; cursor: pointer; font-size: 22px; transition: 0.3s; }
+        .cart-item-delete:hover { transform: scale(1.2); color: #a71d2a; }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->  <!-- Navbar -->   <!-- Navbar -->   <!-- Navbar -->   <!-- Navbar -->  <!-- Navbar -->
+    
+    
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top shadow-sm py-0" style="min-height: 60px;">
+    <div class="container-fluid px-3 px-md-4">
+        
+        <!-- Logo -->
+        <a class="navbar-brand p-0" href="index.html" style="margin-left: 60px;">
+            <img src="image/logo.png" alt="Keshtaru Logo" class="brand-logo rounded-circle p-1" 
+                 style="width: 90px; height: 90px; object-fit: cover;">
+        </a>
+        
+        <!-- Mobile Toggle Button -->
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Offcanvas Sidebar -->
+        <div class="offcanvas offcanvas-end offcanvas-custom" tabindex="-1" id="offcanvasNavbar">
+            <div class="offcanvas-header border-bottom border-success">
+                <h5 class="offcanvas-title text-white fw-bold">Keshtaru</h5>
+                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas"></button>
+            </div>
+            
+            <div class="offcanvas-body">
+                <ul class="navbar-nav ms-auto fw-semibold fs-5 pe-lg-5" style="margin-right: 50px;">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    
+                    <!-- Products Dropdown (সুন্দর ডিজাইন করা) -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="index.html#products" id="productDropdown" data-bs-toggle="dropdown">
+                            Our Products
+                        </a>
+                        
+                        <ul class="dropdown-menu custom-dropdown" aria-labelledby="productDropdown">
+                            <li><a class="dropdown-item" href="index.html#category-comb">চিরুনি (Comb)</a></li>
+                            <li><a class="dropdown-item" href="index.html#category-oil">তেল (Oil)</a></li>
+                            <li><a class="dropdown-item" href="index.html#category-pack">হেয়ার প্যাক (Hair Pack)</a></li>
+                        </ul>
+                    
+                    </li>
+                    
+                    <li class="nav-item"><a class="nav-link" href="index.html#about">About Us</a></li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link fs-4" href="#" id="profile-btn" style="transition: 0.3s;">
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                    </li>
+               
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+   
+   
+   
+    <!-- Highlight Box -->
+    <!-- Highlight Box -->
+    <header class="container-fluid px-0 mt-4 mx-auto" style="max-width: 1800px;">
+        <div id="offerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner shadow-sm bg-light">
+
+                // DISPLAY PRODUCTS LIST  
+
+                <!-- Display 1 -->
+                <div class="carousel-item active">
+                    <!-- লিংকে আপনার পছন্দের প্রোডাক্টের ID দিন -->
+                    <a href="product-details.html?id=900 taka">
+                        <img src="image/display/1.jpg" class="d-block w-100" alt="Display 1">
+                    </a>
+                </div>
+                
+                <!-- Display 2 -->
+                <div class="carousel-item">
+                    <a href="product-details.html?id=magic-oil">
+                        <img src="image/display/2.jpg" class="d-block w-100" alt="Display 2">
+                    </a>
+                </div>
+                
+                <!-- Display 3 -->
+                <div class="carousel-item">
+                    <a href="product-details.html?id=aloevera-pack">
+                        <img src="image/display/3.jpg" class="d-block w-100" alt="Display 3">
+                    </a>
+                </div>
+                
+            </div>
+                
+
+
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#offerCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(100%);"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#offerCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(100%);"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Products Section -->
+    <section id="products" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold" style="color: #2c4c3b;">আমাদের প্রোডাক্টস</h2>
+            
+            <!-- Category: Comb -->
+            
+            <h4 id="category-comb" class="mb-4 fw-bold border-bottom pb-2">চিরুনি (Comb)</h4>
+            <div class="row g-4 mb-5">
+                
+                <!--1ST COMB-->
+                
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/Comb/Sandalwood extra wide teeth comb.jpg" class="card-img-top product-img" alt="Extra Wide">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Sandalwood Extra Wide Teeth Comb</h6>
+                            <p class="text-success fw-bold">৳ ৩৫০</p>
+                            <a href="product-details.html?id=wide-comb" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--2ND COMB-->
+                
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/Comb/Sandalwood narrow teeth comb.jpg" class="card-img-top product-img" alt="Narrow">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Sandalwood Narrow Teeth Comb</h6>
+                            <p class="text-success fw-bold">৳ ৩২০</p>
+                            <a href="product-details.html?id=narrow-comb" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--3RD COMB-->
+                
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/Comb/Peach wood (1).jpg" class="card-img-top product-img" alt="Peach Wood">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Peach Wood Comb</h6>
+                            <p class="text-success fw-bold">৳ ২৫০</p>
+                            <a href="product-details.html?id=peach-comb" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--4TH COMB-->
+
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/Comb/Peach wood (2).jpg" class="card-img-top product-img" alt="Peach Wood">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Peach Wood Comb</h6>
+                            <p class="text-success fw-bold">৳ ২৫০</p>
+                            <a href="product-details.html?id=peach-comb-1" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--5TH COMB-->
+
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/Comb/Peach wood (3).jpg" class="card-img-top product-img" alt="Peach Wood">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Peach Wood Comb</h6>
+                            <p class="text-success fw-bold">৳ ৫০</p>
+                            <a href="product-details.html?id=peach-comb-2" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--6TH COMB-->
+
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/Comb/Peach wood (4).jpg" class="card-img-top product-img" alt="Peach Wood">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Peach Wood Comb</h6>
+                            <p class="text-success fw-bold">৳ 1৫০</p>
+                            <a href="product-details.html?id=peach-comb-3" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Oil -->
+            
+            <h4 id="category-oil" class="mb-4 fw-bold border-bottom pb-2 mt-5">তেল (Oil)</h4>
+            <div class="row g-4 mb-5">
+                
+               <!--1ST OILL-->
+
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/oil/Magic essence hair oil.jpg" class="card-img-top product-img" alt="Magic Essence">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Magic Essence Hair Oil</h6>
+                            <p class="text-success fw-bold">৳ ৩০০</p>
+                            <a href="product-details.html?id=magic-oil" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--2ND OILL-->
+
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/oil/Root care herbal essence hair oil.jpg" class="card-img-top product-img" alt="Root Care">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Root Care Herbal Essence Oil</h6>
+                            <p class="text-success fw-bold">৳ ৩২০</p>
+                            <a href="product-details.html?id=root-oil" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--3RD OILL-->
+
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/oil/Silk secret shine therapy hair oil.jpg" class="card-img-top product-img" alt="Silk Secret">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Silk Secret Shine Therapy Oil</h6>
+                            <p class="text-success fw-bold">৳ ৩৫০</p>
+                            <a href="product-details.html?id=silk-oil" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Category: Hair Pack -->
+
+            <h4 id="category-pack" class="mb-4 fw-bold border-bottom pb-2 mt-5">হেয়ার প্যাক (Hair Pack)</h4>
+            <div class="row g-4 mb-5">
+
+                <!--1ST HAIR Pack-->
+
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/hair pack/aloevera hair pack.jpg" class="card-img-top product-img" alt="Aloevera">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Aloevera Hair Pack</h6>
+                            <p class="text-success fw-bold">৳ ২০০</p>
+                            <a href="product-details.html?id=aloevera-pack" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--2ND HAIR Pack-->
+
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/hair pack/beetroot hair pack.jpg" class="card-img-top product-img" alt="Beetroot">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Beetroot Hair Pack</h6>
+                            <p class="text-success fw-bold">৳ ২০০</p>
+                            <a href="product-details.html?id=beetroot-pack" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--3RD HAIR Pack-->
+
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/hair pack/chlorophyll hair pack.jpg" class="card-img-top product-img" alt="Chlorophyll">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Chlorophyll Hair Pack</h6>
+                            <p class="text-success fw-bold">৳ ২২০</p>
+                            <a href="product-details.html?id=chlorophyll-pack" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--4TH HAIR Pack-->
+
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card product-card h-100 shadow-sm border-0 bg-light">
+                        <img src="image/hair pack/mehedi hair pack.jpg" class="card-img-top product-img" alt="Mehedi">
+                        <div class="card-body text-center p-3">
+                            <h6 class="card-title fw-bold">Mehedi Hair Pack</h6>
+                            <p class="text-success fw-bold">৳ ১৫০</p>
+                            <a href="product-details.html?id=mehedi-pack" class="btn btn-outline-success btn-sm px-3">বিস্তারিত দেখুন</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </section>
+
+   
+    <!-- Footer -->
+    <footer class="text-white py-4 text-center" style="background-color: #1f3629;">
+        <div class="container">
+            <p class="mb-2 fs-5">© 2026 Keshtaru | সকল অধিকার সংরক্ষিত</p>
+            
+            <!-- সোশ্যাল মিডিয়া আইকন ও লিংক -->
+            <div class="d-flex justify-content-center gap-4 mt-3">
+                <a href="https://www.facebook.com/profile.php?id=61591005358430" target="_blank" class="text-white fs-3 text-decoration-none" title="Facebook">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="https://www.messenger.com/t/12456632086196879" target="_blank" class="text-white fs-3 text-decoration-none" title="Messenger">
+                    <i class="bi bi-messenger"></i>
+                </a>
+                <a href="https://wa.me/8801325763779" target="_blank" class="text-white fs-3 text-decoration-none" title="WhatsApp">
+                    <i class="bi bi-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <!-- =========================================
+         ফ্লোটিং কার্ট বাটন ও পপ-আপ (দুটি পেজেই থাকবে)
+    ========================================= -->
+    <div class="cart-fab" onclick="toggleMagicCart()">
+        <i class="bi bi-cart3"></i>
+        <span class="cart-badge" id="cart-badge-count">০</span>
+    </div>
+
+    <div class="magic-cart-overlay" id="magic-cart-overlay" onclick="closeCartOnOverlay(event)">
+        <div class="magic-cart-box">
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-3">
+                <h4 class="fw-bold text-success mb-0"><i class="bi bi-bag-check-fill"></i> আমার শপিং কার্ট</h4>
+                <button class="btn-close shadow-none fs-5" onclick="toggleMagicCart()"></button>
+            </div>
+            
+            <div class="cart-items-container" id="cart-items-container">
+                <!-- জাভাস্ক্রিপ্ট এখানে প্রোডাক্ট বসাবে -->
+            </div>
+
+            <div class="border-top pt-3">
+                <div class="d-flex justify-content-between fw-bold fs-5 mb-3 text-dark">
+                    <span>সর্বমোট:</span>
+                    <span id="cart-total-price">৳ ০</span>
+                </div>
+                <button class="btn btn-success w-100 fw-bold fs-5 py-2 shadow-sm" onclick="goToCheckout()">চেকআউট করুন (Checkout)</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- মোবাইল মেনু (Offcanvas) ক্লিক করার পর অটোমেটিক বন্ধ করার কোড -->
+    <script>
+        document.querySelectorAll('.offcanvas-body .dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+                let offcanvasElement = document.getElementById('offcanvasNavbar');
+                let bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                if (bsOffcanvas) {
+                    bsOffcanvas.hide();
+                }
+            });
+        });
+    </script>
+    
+    
+    
+    
+    <!-- ==========================================
+         Auth Modal (লগইন ও রেজিস্ট্রেশন পপ-আপ)
+    =========================================== -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 12px;">
+                <div class="modal-body p-4 p-md-5">
+                    <button type="button" class="btn-close position-absolute top-0 end-0 m-3 shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                    
+                    <!-- লগইন বক্স -->
+                    <div id="modal-login-box">
+                        <h3 class="text-center fw-bold mb-4" style="color: #2c4c3b;">লগইন করুন</h3>
+                        <form id="modal-login-form" onsubmit="return false;">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold" style="color: #2c4c3b;">ইমেইল অ্যাড্রেস</label>
+                                <input type="email" id="modal-login-email" class="form-control form-control-lg" placeholder="example@email.com" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-bold" style="color: #2c4c3b;">পাসওয়ার্ড</label>
+                                <input type="password" id="modal-login-password" class="form-control form-control-lg" placeholder="পাসওয়ার্ড দিন" required>
+                            </div>
+                            <button type="submit" id="modal-login-btn" class="btn w-100 py-2 fs-5 text-white fw-bold shadow-sm" style="background-color: #2c4c3b; transition: 0.3s;">লগইন</button>
+                        </form>
+                        <p class="text-center mt-4 fw-medium text-muted">অ্যাকাউন্ট নেই? <span class="text-success fw-bold" style="cursor: pointer; text-decoration: underline;" onclick="toggleModalAuth('register')">নতুন অ্যাকাউন্ট খুলুন</span></p>
+                    </div>
+
+                    <!-- রেজিস্টার বক্স (শুরুতে লুকানো থাকবে) -->
+                    <div id="modal-register-box" style="display: none;">
+                        <h3 class="text-center fw-bold mb-4" style="color: #2c4c3b;">অ্যাকাউন্ট তৈরি করুন</h3>
+                        <form id="modal-register-form" onsubmit="return false;">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold" style="color: #2c4c3b;">আপনার নাম</label>
+                                <input type="text" id="modal-reg-name" class="form-control form-control-lg" placeholder="আপনার নাম লিখুন" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold" style="color: #2c4c3b;">ইমেইল অ্যাড্রেস</label>
+                                <input type="email" id="modal-reg-email" class="form-control form-control-lg" placeholder="example@email.com" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-bold" style="color: #2c4c3b;">নতুন পাসওয়ার্ড (অন্তত ৬ অক্ষরের)</label>
+                                <input type="password" id="modal-reg-password" class="form-control form-control-lg" placeholder="পাসওয়ার্ড তৈরি করুন" required>
+                            </div>
+                            <button type="submit" id="modal-reg-btn" class="btn btn-success w-100 py-2 fs-5 fw-bold shadow-sm">অ্যাকাউন্ট খুলুন</button>
+                        </form>
+                        <p class="text-center mt-4 fw-medium text-muted">ইতিমধ্যেই অ্যাকাউন্ট আছে? <span class="text-success fw-bold" style="cursor: pointer; text-decoration: underline;" onclick="toggleModalAuth('login')">লগইন করুন</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ফর্ম টগল করার স্ক্রিপ্ট -->
+    <script>
+        function toggleModalAuth(type) {
+            if (type === 'register') {
+                document.getElementById('modal-login-box').style.display = 'none';
+                document.getElementById('modal-register-box').style.display = 'block';
+            } else {
+                document.getElementById('modal-register-box').style.display = 'none';
+                document.getElementById('modal-login-box').style.display = 'block';
+            }
+        }
+    </script>
+
+    <!-- ফায়ারবেস অথেনটিকেশন ও পপ-আপ লজিক -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // আপনার ফায়ারবেস কনফিগ
+        const firebaseConfig = {
+            apiKey: "AIzaSyAiyQ8hO4YsTLMkN2z8bCuKMnq5xuCcGBY",
+            authDomain: "keshtaru-8cf82.firebaseapp.com",
+            projectId: "keshtaru-8cf82",
+            storageBucket: "keshtaru-8cf82.firebasestorage.app",
+            messagingSenderId: "933852183012",
+            appId: "1:933852183012:web:615ddbfe64e5b0d9a2eff1",
+            measurementId: "G-P14WTYC8QS"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        let isUserLoggedIn = false;
+        const profileBtn = document.getElementById('profile-btn');
+
+        
+        // ইউজার লগইন করা আছে কিনা চেক করা  // ইউজার লগইন করা আছে কিনা চেক করা // ইউজার লগইন করা আছে কিনা চেক করা
+        // ইউজার লগইন করা আছে কিনা চেক করা  // ইউজার লগইন করা আছে কিনা চেক করা // ইউজার লগইন করা আছে কিনা চেক করা
+
+
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                isUserLoggedIn = true;
+                profileBtn.classList.add('text-success'); // লগইন থাকলে আইকন সবুজ হয়ে যাবে
+            } else {
+                isUserLoggedIn = false;
+                profileBtn.classList.remove('text-success');
+            }
+        });
+
+
+
+        // প্রোফাইল আইকনে ক্লিক করার লজিক  // প্রোফাইল আইকনে ক্লিক করার লজিক  // প্রোফাইল আইকনে ক্লিক করার লজিক
+        profileBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (isUserLoggedIn) {
+                // লগইন করা থাকলে ড্যাশবোর্ডে যাবে
+                window.location.href = "dashboard.html";
+            } else {
+                // লগইন না থাকলে পপ-আপ ওপেন হবে
+                var authModal = new bootstrap.Modal(document.getElementById('authModal'));
+                authModal.show();
+            }
+        });
+
+         // ইউজার লগইন করা আছে কিনা চেক করা  // ইউজার লগইন করা আছে কিনা চেক করা // ইউজার লগইন করা আছে কিনা চেক করা
+        // ইউজার লগইন করা আছে কিনা চেক করা  // ইউজার লগইন করা আছে কিনা চেক করা // ইউজার লগইন করা আছে কিনা চেক করা
+
+
+
+
+
+        // পপ-আপ থেকে লগইন করা
+        document.getElementById('modal-login-form').addEventListener('submit', function() {
+            const btn = document.getElementById('modal-login-btn');
+            btn.innerHTML = "লগইন হচ্ছে... ⏳";
+            const email = document.getElementById('modal-login-email').value;
+            const password = document.getElementById('modal-login-password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // লগইন হলে ড্যাশবোর্ডে পাঠিয়ে দেবে
+                    window.location.href = "dashboard.html"; 
+                })
+                .catch((error) => {
+                    alert("ইমেইল অথবা পাসওয়ার্ড ভুল হয়েছে!");
+                    btn.innerHTML = "লগইন";
+                });
+        });
+
+
+
+        // পপ-আপ থেকে নতুন অ্যাকাউন্ট খোলা
+        document.getElementById('modal-register-form').addEventListener('submit', function() {
+            const btn = document.getElementById('modal-reg-btn');
+            btn.innerHTML = "অ্যাকাউন্ট তৈরি হচ্ছে... ⏳";
+            const name = document.getElementById('modal-reg-name').value;
+            const email = document.getElementById('modal-reg-email').value;
+            const password = document.getElementById('modal-reg-password').value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    updateProfile(userCredential.user, { displayName: name }).then(() => {
+                        alert("অভিনন্দন! আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।");
+                        window.location.href = "dashboard.html"; 
+                    });
+                })
+                .catch((error) => {
+                    alert("দুঃখিত, সমস্যা হয়েছে: " + error.message);
+                    btn.innerHTML = "অ্যাকাউন্ট খুলুন";
+                });
+        });
+
+
+
+
+
+       
+
+
+    </script>
+    <!-- =========================================
+         জাদুকরী কার্ট সিস্টেমের লজিক (Shared JS)
+    ========================================= -->
+    <script>
+        let shoppingCart = JSON.parse(localStorage.getItem('keshtaru_cart')) || [];
+
+        function saveCart() {
+            localStorage.setItem('keshtaru_cart', JSON.stringify(shoppingCart));
+            renderCart();
+        }
+
+        function convertToBanglaNumber(num) {
+            return num.toString().replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const badgeCount = document.getElementById('cart-badge-count');
+            
+            if (badgeCount) badgeCount.innerText = convertToBanglaNumber(shoppingCart.length);
+
+            if (shoppingCart.length === 0) {
+                if (container) {
+                    container.innerHTML = `
+                        <div class="text-center py-5 text-muted">
+                            <i class="bi bi-cart-x" style="font-size: 4rem;"></i>
+                            <h5 class="mt-3 fw-bold">আপনার কার্ট একদম খালি!</h5>
+                        </div>`;
+                }
+                const totalPriceEl = document.getElementById('cart-total-price');
+                if (totalPriceEl) totalPriceEl.innerText = '৳ ০';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+
+            shoppingCart.forEach((item, index) => {
+                let itemTotal = item.price * item.qty;
+                total += itemTotal;
+
+                html += `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="Product">
+                    <div class="flex-grow-1">
+                        <h6 class="fw-bold mb-1" style="font-size: 0.95rem; color: #1f3629;">${item.name}</h6>
+                        <div class="text-success fw-bold mb-2">৳ ${convertToBanglaNumber(item.price)}</div>
+                        <div class="d-flex align-items-center gap-2">
+                            <button class="cart-qty-btn" onclick="updateCartQty(${index}, -1)"><i class="bi bi-dash"></i></button>
+                            <span class="fw-bold px-2 fs-5">${convertToBanglaNumber(item.qty)}</span>
+                            <button class="cart-qty-btn" onclick="updateCartQty(${index}, 1)"><i class="bi bi-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="text-end d-flex flex-column justify-content-between">
+                        <i class="bi bi-trash3-fill cart-item-delete align-self-end" onclick="removeFromCart(${index})"></i>
+                        <div class="fw-bold mt-3 text-dark">৳ ${convertToBanglaNumber(itemTotal)}</div>
+                    </div>
+                </div>`;
+            });
+
+            if (container) container.innerHTML = html;
+            const totalPriceEl = document.getElementById('cart-total-price');
+            if (totalPriceEl) totalPriceEl.innerText = `৳ ${convertToBanglaNumber(total)}`;
+        }
+
+        window.updateCartQty = function(index, change) {
+            shoppingCart[index].qty += change;
+            if (shoppingCart[index].qty < 1) shoppingCart[index].qty = 1;
+            saveCart();
+        }
+
+        window.removeFromCart = function(index) {
+            shoppingCart.splice(index, 1);
+            saveCart();
+        }
+
+        window.toggleMagicCart = function() {
+            document.getElementById('magic-cart-overlay').classList.toggle('active');
+        }
+
+        window.closeCartOnOverlay = function(e) {
+            if (e.target.id === 'magic-cart-overlay') { toggleMagicCart(); }
+        }
+
+        window.goToCheckout = function() {
+            if(shoppingCart.length === 0) { alert("আপনার কার্ট খালি!"); return; }
+            window.location.href = "checkout.html";
+        }
+
+        // পেজ লোড হলেই কার্ট আপডেট করবে
+        document.addEventListener('DOMContentLoaded', renderCart);
+
+        // ★ নতুন ম্যাজিক: অন্য পেজে কার্ট আপডেট হলে এই পেজেও সাথে সাথে আপডেট হবে! ★
+        window.addEventListener('storage', function(e) {
+            if(e.key === 'keshtaru_cart') {
+                shoppingCart = JSON.parse(e.newValue) || [];
+                renderCart();
+            }
+        });
+    </script>
+    
+</body>
+</html>
