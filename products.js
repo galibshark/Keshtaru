@@ -37,7 +37,7 @@ window.productsDB = {
         "peach-comb": {
             name: "Peach Wood Comb",
             price: "৳ ২৫০",
-            image: "image/Comb/Peach wood (1).jpg",
+            image: "image/Comb/Peach wood.jpg",
             description: "পিচ কাঠের তৈরি এই চিরুনি স্ক্যাল্পের স্বাস্থ্য ভালো রাখে এবং চুল মসৃণ করে।",
             reviews: [
                 "image/Comb/review/rvw1.png", "image/Comb/review/rvw2.png", "image/Comb/review/rvw3.png", 
@@ -46,27 +46,21 @@ window.productsDB = {
             ]
         },
         "peach-comb-1": {
-            name: "Peach Wood Comb 1",
+            name: "Peach Wood narrow teeth comb",
             price: "৳ 3৫০",
-            image: "image/Comb/Peach wood (2).jpg",
+            image: "image/Comb/Peach wood narrow.jpg",
             description: "পিচ কাঠের তৈরি এই চিরুনি স্ক্যাল্পের স্বাস্থ্য ভালো রাখে এবং চুল মসৃণ করে।",
             reviews: [
                 "image/Comb/review/rvw1.png", "image/Comb/review/rvw2.png", "image/Comb/review/rvw3.png"
             ]
         },
         "peach-comb-2": {
-            name: "Peach Wood Comb 2",
+            name: "Peach Wood wide teeth comb",
             price: "৳ ৫০",
-            image: "image/Comb/Peach wood (3).jpg",
+            image: "image/Comb/Peach wood wide.jpg",
             description: "পিচ কাঠের তৈরি এই চিরুনি স্ক্যাল্পের স্বাস্থ্য ভালো রাখে এবং চুল মসৃণ করে।"
         },
-        "peach-comb-3": {
-            name: "Peach Wood Comb 3",
-            price: "৳ 1৫০",
-            image: "image/Comb/Peach wood (4).jpg",
-            description: "পিচ কাঠের তৈরি এই চিরুনি স্ক্যাল্পের স্বাস্থ্য ভালো রাখে এবং চুল মসৃণ করে।"
-        },
-
+        
     // তেল (Oils)
         "magic-oil": {
             name: "Magic Essence Hair Oil",
