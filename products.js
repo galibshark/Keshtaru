@@ -189,7 +189,7 @@ window.productsDB = {
     // Category: Satin Pillow Cover
         "black-pillowcover": {
             name: "Black Satin Pillow Cover",
-            price: "৳ ৩৫০",
+            price: "৳ 350",
             image: "image/Satin pillow cover/black.jpg",
             description: "চুল পড়া রোধ এবং ত্বকের যত্নে প্রিমিয়াম স্যাটিন পিলোকভার। এটি সাধারণ সুতির বালিশের কভারের মতো আপনার চুল ও ত্বকের প্রাকৃতিক আর্দ্রতা শুষে নেয় না। রাতে ঘুমানোর সময় ঘর্ষণ কমিয়ে চুলকে রাখে জটমুক্ত, সিল্কি এবং ত্বককে রাখে সুরক্ষিত।"
         },
