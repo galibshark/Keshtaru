@@ -268,33 +268,7 @@
 
 
 
-        // =========================================================
-        // ৪. জিপিএস লোকেশন লজিক
-        // =========================================================
-        document.getElementById('gps-btn').addEventListener('click', function () {
-            const gpsBtn = document.getElementById('gps-btn');
-            const mapLinkInput = document.getElementById('c-map-link');
-            gpsBtn.innerHTML = "⏳ লোকেশন খোঁজা হচ্ছে...";
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function (position) {
-                        let lat = position.coords.latitude;
-                        let lon = position.coords.longitude;
-                        mapLinkInput.value = `https://www.google.com/maps?q=${lat},${lon}`;
-                        gpsBtn.classList.replace('btn-outline-primary', 'btn-success');
-                        gpsBtn.innerHTML = "✔ লোকেশন যুক্ত হয়েছে";
-                        document.getElementById('gps-status').style.display = "block";
-                    },
-                    function (error) {
-                        alert("লোকেশন পাওয়া যায়নি! দয়া করে নিচে ম্যানুয়ালি ঠিকানা লিখুন।");
-                        gpsBtn.innerHTML = "📍 [বর্তমান লোকেশন নিন]";
-                    }
-                );
-            } else {
-                alert("আপনার ব্রাউজার জিপিএস সাপোর্ট করে না!");
-            }
-        });
+        
 
         // =========================================================
         // ৫. অর্ডার প্লেস করা (Firestore + Google Sheet)
@@ -372,6 +346,109 @@
             }
         });
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        // ==========================================
+        // ১. ড্রপডাউন (Division > District > Upazila) ম্যাজিক
+        // ==========================================
+        const divisionSelect = document.getElementById('division-select');
+        const districtSelect = document.getElementById('district-select');
+        const upazilaSelect = document.getElementById('upazila-select');
+
+        // পেজ লোড হলেই bdLocations ডাটাবেস থেকে সব বিভাগের নাম বসিয়ে দেওয়া
+        for (let division in bdLocations) {
+            divisionSelect.innerHTML += `<option value="${division}">${division}</option>`;
+        }
+
+        // কাস্টমার যখন 'বিভাগ' সিলেক্ট করবে
+        divisionSelect.addEventListener('change', function() {
+            const selectedDiv = this.value;
+            
+            // জেলা ড্রপডাউন আনলক করে ফাঁকা করা
+            districtSelect.disabled = false;
+            districtSelect.innerHTML = `<option value="" selected disabled>জেলা নির্বাচন করুন</option>`;
+            
+            // উপজেলা ড্রপডাউন লক ও ফাঁকা করা
+            upazilaSelect.disabled = true;
+            upazilaSelect.innerHTML = `<option value="" selected disabled>আগে জেলা নির্বাচন করুন</option>`;
+
+            // নির্বাচিত বিভাগের জেলার নামগুলো বসানো
+            for (let district in bdLocations[selectedDiv]) {
+                districtSelect.innerHTML += `<option value="${district}">${district}</option>`;
+            }
+
+            // *** ডেলিভারি চার্জের লজিক (Inside/Outside Dhaka) ***
+            if (selectedDiv === "Dhaka (ঢাকা)") {
+                console.log("ইনসাইড ঢাকা: ডেলিভারি চার্জ ৬০ টাকা");
+                // (পরে আমরা এখানে কার্টের সাথে টাকা যোগ করার কোড বসাবো)
+            } else {
+                console.log("আউটসাইড ঢাকা: ডেলিভারি চার্জ ১২০ টাকা");
+            }
+        });
+
+        // কাস্টমার যখন 'জেলা' সিলেক্ট করবে
+        districtSelect.addEventListener('change', function() {
+            const selectedDiv = divisionSelect.value;
+            const selectedDist = this.value;
+
+            // উপজেলা ড্রপডাউন আনলক করে ফাঁকা করা
+            upazilaSelect.disabled = false;
+            upazilaSelect.innerHTML = `<option value="" selected disabled>উপজেলা/থানা নির্বাচন করুন</option>`;
+
+            // নির্বাচিত জেলার উপজেলাগুলো বসানো
+            const upazilas = bdLocations[selectedDiv][selectedDist];
+            upazilas.forEach(function(upazila) {
+                upazilaSelect.innerHTML += `<option value="${upazila}">${upazila}</option>`;
+            });
+        });
+
+
+        // ==========================================
+        // ২. লাইভ লোকেশন (Live Location) বাটনের ম্যাজিক
+        // ==========================================
+        const liveBtn = document.getElementById('live-location-btn');
+        const addressBox = document.getElementById('detailed-address');
+
+        liveBtn.addEventListener('click', function() {
+            // খোঁজা শুরু হলে বাটনের চেহারা বদলাবে
+            liveBtn.innerHTML = `<i class="bi bi-hourglass-split fs-4 text-white"></i> <span>লোকেশন খোঁজা হচ্ছে... ⏳</span>`;
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        // সফলভাবে লোকেশন পেলে
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        
+                        // ম্যাপের ফ্রি API দিয়ে অক্ষাংশ/দ্রাঘিমাংশ থেকে আসল ঠিকানা বের করা
+                        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                addressBox.value = data.display_name; // বক্সের ভেতর আসল ঠিকানা বসিয়ে দেওয়া
+                                
+                                // বাটন সবুজ করে সাকসেস মেসেজ দেওয়া
+                                liveBtn.innerHTML = `<i class="bi bi-check-circle-fill fs-4 text-white"></i> <span>লোকেশন পাওয়া গেছে!</span>`;
+                                liveBtn.classList.replace('btn-primary', 'btn-success'); 
+                            })
+                            .catch(error => {
+                                alert("ঠিকানা খুঁজে পেতে সমস্যা হচ্ছে। দয়া করে নিজে টাইপ করুন।");
+                                liveBtn.innerHTML = `<i class="bi bi-geo-alt-fill fs-4 text-white"></i> <span>বর্তমান লোকেশন নিন</span>`;
+                            });
+                    },
+                    function(error) {
+                        // ইউজার যদি লোকেশন পারমিশন না দেয়
+                        alert("আপনি লোকেশন চেক করার অনুমতি দেননি! দয়া করে Allow করুন অথবা নিজে টাইপ করুন।");
+                        liveBtn.innerHTML = `<i class="bi bi-geo-alt-fill fs-4 text-white"></i> <span>বর্তমান লোকেশন নিন</span>`;
+                    }
+                );
+            } else {
+                alert("আপনার ব্রাউজারে লোকেশন সাপোর্ট করে না!");
+            }
+        });
+
+    });
+</script>
     <script src="components.js"></script>
     <script src="products.js"></script>
     <script src="bd-locations.js"></script>
