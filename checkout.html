@@ -62,11 +62,16 @@
                         <div class="card-body p-4">
                             <h5 class="fw-bold mb-4 text-success"><i class="bi bi-geo-alt-fill"></i> ডেলিভারি লোকেশন *</h5>
                             
-                            <!-- লাইভ লোকেশন বাটন (আকর্ষণীয় ডিজাইন) -->
-                            <button type="button" class="btn btn-success w-100 fw-bold fs-5 mb-4 py-2 shadow-sm d-flex justify-content-center align-items-center gap-2" id="live-location-btn" style="transition: all 0.3s ease;">
-                                <i class="bi bi-geo-fill fs-4 text-warning"></i> 
-                                <span>লাইভ লোকেশন (Live Location)</span>
-                            </button>
+                            <!-- লাইভ লোকেশন ডিসক্লেইমার ও বাটন -->
+                            <div class="location-btn-box mb-4 mt-2">
+                                <p class="text-secondary mb-2 text-center fw-medium" style="font-size: 0.9rem;">
+                                    <i class="bi bi-info-circle-fill text-primary"></i> এক ক্লিকেই অটোমেটিক আপনার সঠিক ঠিকানা সেট করতে নিচের বাটনে ক্লিক করুন:
+                                </p>
+                                <button type="button" class="btn btn-primary w-100 fw-bold fs-5 py-3 shadow-sm d-flex justify-content-center align-items-center gap-2 rounded-3" id="live-location-btn" style="transition: all 0.3s ease; background-color: #0d6efd; border: none;">
+                                    <i class="bi bi-geo-alt-fill fs-4 text-white"></i> 
+                                    <span>Live Location</span>
+                                </button>
+                            </div>
 
                             <!-- ডিভিশন, ডিস্ট্রিক্ট, উপজেলা ড্রপডাউন -->
                             <div class="row g-3 mb-3">
@@ -104,25 +109,25 @@
 
 
 
+            
+            
+            
+            
+            
 
-            <!-- 
-                ডান দিকের কলাম (অর্ডার সামারি বা হিসাব-নিকাশ) 
-            -->
-            <div class="col-md-5">
-                <div class="checkout-box shadow-sm">
-                    <h4 class="fw-bold mb-4 border-bottom pb-2">অর্ডার সামারি</h4>
-
-
-
+                
+            
+            
+            
+                <!--ডান দিকের কলাম (অর্ডার সামারি বা হিসাব-নিকাশ) -->
+               
+                <div class="col-md-5">
+                   <div class="checkout-box shadow-sm">
+                   <h4 class="fw-bold mb-4 border-bottom pb-2">অর্ডার সামারি</h4>
                     <!-- কার্টের প্রোডাক্টগুলোর ছোট ছবির বক্স -->
                     <div id="checkout-img-container" class="d-flex gap-2 mb-3 overflow-auto pb-2">
                         <!-- জাভাস্ক্রিপ্ট এখানে অটোমেটিক ছবিগুলো বসাবে -->
                     </div>
-
-
-
-
-
                     <div class="d-flex justify-content-between mb-2">
                         <span id="summary-name" class="fw-bold text-muted">প্রোডাক্ট লোড হচ্ছে...</span>
                         <span id="summary-qty" class="fw-bold">x 0</span>
