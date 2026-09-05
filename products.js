@@ -14,7 +14,7 @@ window.productsDB = {
     // চিরুনি (Combs)
         "wide-comb": {
             name: "Sandalwood Extra Wide Teeth Comb",
-            price: "৳ ৩৫০",
+            price: "৳ 560",
             image: "image/Comb/Sandalwood extra wide teeth comb.jpg",
             description: "বড় দাঁতের এই চন্দন কাঠের চিরুনি চুলের জট ছাড়াতে এবং চুল পড়া কমাতে দারুণ কার্যকরী।",
             reviews: [
@@ -25,7 +25,7 @@ window.productsDB = {
         },
         "narrow-comb": {
             name: "Sandalwood Narrow Teeth Comb",
-            price: "৳ ৩২০",
+            price: "৳ 470",
             image: "image/Comb/Sandalwood narrow teeth comb.jpg",
             description: "নরমাল চুল সাজানোর জন্য ১০০% আসল চন্দন কাঠের চিকন দাঁতের চিরুনি।",
             reviews: [
@@ -36,7 +36,7 @@ window.productsDB = {
         },
         "peach-comb": {
             name: "Peach Wood Comb",
-            price: "৳ ২৫০",
+            price: "৳ 230",
             image: "image/Comb/Peach wood.jpg",
             description: "পিচ কাঠের তৈরি এই চিরুনি স্ক্যাল্পের স্বাস্থ্য ভালো রাখে এবং চুল মসৃণ করে।",
             reviews: [
@@ -47,7 +47,7 @@ window.productsDB = {
         },
         "peach-comb-1": {
             name: "Peach Wood narrow teeth comb",
-            price: "৳ 3৫০",
+            price: "৳ 230",
             image: "image/Comb/Peach wood narrow.jpg",
             description: "পিচ কাঠের তৈরি এই চিরুনি স্ক্যাল্পের স্বাস্থ্য ভালো রাখে এবং চুল মসৃণ করে।",
             reviews: [
@@ -56,53 +56,53 @@ window.productsDB = {
         },
         "peach-comb-2": {
             name: "Peach Wood wide teeth comb",
-            price: "৳ ৫০",
+            price: "৳ 230",
             image: "image/Comb/Peach wood wide.jpg",
             description: "পিচ কাঠের তৈরি এই চিরুনি স্ক্যাল্পের স্বাস্থ্য ভালো রাখে এবং চুল মসৃণ করে।"
         },
         
     // তেল (Oils)
         "magic-oil": {
-            name: "Magic Essence Hair Oil",
-            price: "৳ ৩০০",
+            name: "Magic Essence Hair Oil-(100ml)",
+            price: "৳ 220",
             image: "image/oil/Magic essence hair oil.jpg",
             description: "চুলকে গোড়া থেকে মজবুত করতে এবং দ্রুত বৃদ্ধিতে সহায়তা করে ম্যাজিক এসেন্স হেয়ার অয়েল।"
         },
         "root-oil": {
-            name: "Root Care Herbal Essence Hair Oil",
-            price: "৳ ৩২০",
+            name: "Root Care Herbal Essence Hair Oil-(100ml)",
+            price: "৳ 290",
             image: "image/oil/Root care herbal essence hair oil.jpg",
             description: "বিশেষভাবে রুক্ষ ও ড্যামেজ চুলের যত্ন নিতে তৈরি রুট কেয়ার হারবাল হেয়ার অয়েল।"
         },
         "silk-oil": {
-            name: "Silk Secret Shine Therapy Hair Oil",
-            price: "৳ ৩৫০",
+            name: "Silk Secret Shine Therapy Hair Oil-(100ml)",
+            price: "৳ 220",
             image: "image/oil/Silk secret shine therapy hair oil.jpg",
             description: "চুলের সিল্কি ভাব ধরে রাখতে এবং ন্যাচারাল সাইন ফিরিয়ে আনতে সিল্ক সিক্রেট অয়েল।"
         },
 
     // হেয়ার প্যাক (Hair Packs)
         "aloevera-pack": {
-            name: "Aloevera Hair Pack",
-            price: "৳ ২০০",
+            name: "Aloevera Hair Pack(100gm)",
+            price: "৳ 200",
             image: "image/hair pack/aloevera hair pack.jpg",
             description: "অ্যালোভেরার প্রাকৃতিক পুষ্টিতে ভরপুর যা স্ক্যাল্পকে ঠান্ডা রাখে এবং খুশকি দূর করে।"
         },
         "beetroot-pack": {
-            name: "Beetroot Hair Pack",
-            price: "৳ ২০০",
+            name: "Beetroot Hair Pack(100gm)",
+            price: "৳ 250",
             image: "image/hair pack/beetroot hair pack.jpg",
             description: "বিটরুটের নির্যাস যুক্ত যা চুলে প্রাকৃতিক লালচে আভা আনে এবং পুষ্টি জোগায়।"
         },
         "chlorophyll-pack": {
-            name: "Chlorophyll Hair Pack",
-            price: "৳ ২২০",
+            name: "Chlorophyll Hair Pack(100gm)",
+            price: "৳ 130",
             image: "image/hair pack/chlorophyll hair pack.jpg",
             description: "ক্লোরোফিলের শক্তি দিয়ে চুলের গোড়া শক্ত করে এবং অকালে চুল পাকা রোধ করে।"
         },
         "mehedi-pack": {
-            name: "Mehedi Hair Pack",
-            price: "৳ ১৫০",
+            name: "Mehedi Hair Pack(100gm)",
+            price: "৳ 150",
             image: "image/hair pack/mehedi hair pack.jpg",
             description: "১০০% খাঁটি মেহেদী পাতার গুঁড়ো, যা চুলে চমৎকার রং এবং সিল্কি ভাব নিয়ে আসে।"
     },
@@ -111,35 +111,35 @@ window.productsDB = {
     
         "darkgreen-scrunchie": {
             name: "Dark Green Satin Scrunchie",
-            price: "৳ ৫০",
+            price: "৳ S-25, M-50",
             image: "image/Satin scrunchies/dark green.jpg",
             description: "hellooo"
         },
         
         "gold-scrunchie": {
             name: "Gold Satin Scrunchie",
-            price: "৳ ৫০",
+            price: "৳ S-25, M-50",
             image: "image/Satin scrunchies/gold.jpg",
             description: "hellooo"
         },
         
         "lightpink-scrunchie": {
             name: "Light Pink Satin Scrunchie",
-            price: "৳ ৫০",
+            price: "৳ S-25, M-50",
             image: "image/Satin scrunchies/light pink.jpg",
             description: "hellooo"
         },
         
         "maroon-scrunchie": {
             name: "Maroon Satin Scrunchie",
-            price: "৳ ৫০",
+            price: "৳ S-25, M-50",
             image: "image/Satin scrunchies/maroon.jpg",
             description: "hellooo"
         },
         
         "rust-scrunchie": {
             name: "Rust Satin Scrunchie",
-            price: "৳ ৫০",
+            price: "৳ S-25, M-50",
             image: "image/Satin scrunchies/rust.jpg",
             description: "hellooo"
         },
@@ -148,28 +148,28 @@ window.productsDB = {
     // Category: Satin Pillow Cover
         "black-pillowcover": {
             name: "Black Satin Pillow Cover",
-            price: "৳ ৩৫০",
+            price: "৳ 350",
             image: "image/Satin pillow cover/black.jpg",
             description: "চুল পড়া রোধ এবং ত্বকের যত্নে প্রিমিয়াম কোয়ালিটির স্যাটিন পিলোকভার। এটি সাধারণ সুতির বালিশের কভারের মতো চুলের আর্দ্রতা শুষে নেয় না, ফলে চুল থাকে জটমুক্ত ও ঝলমলে। ত্বক থাকে সুরক্ষিত।"
         },
         
         "gold-pillowcover": {
             name: "Gold Satin Pillow Cover",
-            price: "৳ ৩৫০",
+            price: "৳ 350",
             image: "image/Satin pillow cover/gold.jpg",
             description: "চুল পড়া রোধ এবং ত্বকের যত্নে প্রিমিয়াম কোয়ালিটির স্যাটিন পিলোকভার। এটি সাধারণ সুতির বালিশের কভারের মতো চুলের আর্দ্রতা শুষে নেয় না, ফলে চুল থাকে জটমুক্ত ও ঝলমলে। ত্বক থাকে সুরক্ষিত।"
         },
         
         "peach-pillowcover": {
             name: "Peach Satin Pillow Cover",
-            price: "৳ ৩৫০",
+            price: "৳ 350",
             image: "image/Satin pillow cover/peach.jpg",
             description: "চুল পড়া রোধ এবং ত্বকের যত্নে প্রিমিয়াম কোয়ালিটির স্যাটিন পিলোকভার। এটি সাধারণ সুতির বালিশের কভারের মতো চুলের আর্দ্রতা শুষে নেয় না, ফলে চুল থাকে জটমুক্ত ও ঝলমলে। ত্বক থাকে সুরক্ষিত।"
         },
         
         "lightpink-pillowcover": {
             name: "Light Pink Satin Pillow Cover",
-            price: "৳ ৩৫০",
+            price: "৳ 350",
             image: "image/Satin pillow cover/light pink.jpg",
             description: "চুল পড়া রোধ এবং ত্বকের যত্নে প্রিমিয়াম কোয়ালিটির স্যাটিন পিলোকভার। এটি সাধারণ সুতির বালিশের কভারের মতো চুলের আর্দ্রতা শুষে নেয় না, ফলে চুল থাকে জটমুক্ত ও ঝলমলে। ত্বক থাকে সুরক্ষিত।"
         }, 
@@ -177,7 +177,7 @@ window.productsDB = {
         
         "pink-bonnet": {
             name: "Pink Satin Hair Bonnet",
-            price: "৳ ২৫০",
+            price: "৳ 400",
             image: "image/Satin hair bonnet/pink.jpg",
             description: "রাতে ঘুমানোর সময় বালিশের সাথে ঘর্ষণ রোধ করে চুল পড়া ও ফ্রিজ কমানোর জন্য প্রিমিয়াম স্যাটিন হেয়ার বনেট। এটি চুলের আর্দ্রতা ধরে রাখে এবং জট পাকানো থেকে রক্ষা করে।"
         }
