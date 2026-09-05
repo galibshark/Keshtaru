@@ -10,42 +10,42 @@ window.productsDB = {
 
         "combo-1": {
             name: "Hair Care Combo 1",
-            price: "৳ ৯০০",
+            price: "৳ 900",
             image: "image/display/1.jpg",
             description: "চুলের সম্পূর্ণ যত্নের জন্য আমাদের স্পেশাল কম্বো প্যাক ১।"
         },
         
         "combo-2": {
             name: "Hair Care Combo 2",
-            price: "৳ ৮৫০",
+            price: "৳ 1000",
             image: "image/display/2.jpg",
             description: "চুল পড়া রোধ এবং নতুন চুল গজাতে সাহায্য করার স্পেশাল কম্বো প্যাক ২।"
         },
         
         "combo-3": {
             name: "Hair Care Combo 3",
-            price: "৳ ৭০০",
+            price: "৳ 600",
             image: "image/display/3.jpg",
             description: "খুশকি দূর করতে এবং চুলকে সিল্কি করতে স্পেশাল কম্বো প্যাক ৩।"
         },
         
         "combo-4": {
             name: "Hair Care Combo 4",
-            price: "৳ ৬৫০",
+            price: "৳ 660",
             image: "image/display/4.jpg",
             description: "চুলের গোড়া মজবুত করতে স্পেশাল কম্বো প্যাক ৪।"
         },
         
         "combo-5": {
             name: "Hair Care Combo 5",
-            price: "৳ ৫০০",
+            price: "৳ 750",
             image: "image/display/5.jpg",
             description: "রেগুলার হেয়ার কেয়ারের জন্য আমাদের স্পেশাল কম্বো প্যাক ৫।"
         },
         
         "combo-6": {
             name: "Hair Care Combo 6",
-            price: "৳ ৪৫০",
+            price: "৳ 940",
             image: "image/display/6.jpg",
             description: "বাজেটের মধ্যে সেরা হেয়ার কেয়ার স্পেশাল কম্বো প্যাক ৬।"
         },
