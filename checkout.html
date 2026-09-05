@@ -56,28 +56,52 @@
                     </div>
 
 
-                    <!-- জিপিএস লোকেশন বাটন ও ইনপুট -->
-                    <div class="mb-4 mt-4 p-3 border rounded bg-white shadow-sm">
-                        <label class="form-label text-primary"><i class="bi bi-geo-alt-fill"></i> ডেলিভারি লোকেশন
-                            *</label>
+                   
+                    <!-- ডেলিভারি লোকেশন বক্স শুরু -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-4 text-success"><i class="bi bi-geo-alt-fill"></i> ডেলিভারি লোকেশন *</h5>
+                            
+                            <!-- লাইভ লোকেশন বাটন (আকর্ষণীয় ডিজাইন) -->
+                            <button type="button" class="btn btn-success w-100 fw-bold fs-5 mb-4 py-2 shadow-sm d-flex justify-content-center align-items-center gap-2" id="live-location-btn" style="transition: all 0.3s ease;">
+                                <i class="bi bi-geo-fill fs-4 text-warning"></i> 
+                                <span>লাইভ লোকেশন (Live Location)</span>
+                            </button>
 
-                        <!-- [বর্তমান লোকেশন নিন] বাটন -->
-                        <button type="button" id="gps-btn" class="btn btn-outline-primary w-100 mb-3 fw-bold">
-                            📍 [বর্তমান লোকেশন নিন]
-                        </button>
+                            <!-- ডিভিশন, ডিস্ট্রিক্ট, উপজেলা ড্রপডাউন -->
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">বিভাগ (Division) *</label>
+                                    <select class="form-select border-success" id="division-select" required>
+                                        <option value="" selected disabled>বিভাগ নির্বাচন করুন</option>
+                                        <!-- জাভাস্ক্রিপ্ট দিয়ে এখানে অপশন আসবে -->
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">জেলা (District) *</label>
+                                    <select class="form-select" id="district-select" disabled required>
+                                        <option value="" selected disabled>আগে বিভাগ নির্বাচন করুন</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">উপজেলা/থানা (Upazila) *</label>
+                                    <select class="form-select" id="upazila-select" disabled required>
+                                        <option value="" selected disabled>আগে জেলা নির্বাচন করুন</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                        <p id="gps-status" class="text-success fw-bold" style="font-size: 0.9rem; display: none;">✔
-                            ম্যাপ লোকেশন নেওয়া হয়েছে!</p>
-
-                        <!-- গুগল ম্যাপের লিংকটি এখানে অটোমেটিক বসবে (কাস্টমার দেখতে পাবে না) -->
-                        <input type="hidden" id="c-map-link" value="লোকেশন দেওয়া হয়নি">
-
-                        <textarea id="c-address" class="form-control mt-2" rows="2"
-                            placeholder="বিস্তারিত ঠিকানা লিখুন (বাসা/রোড নম্বর)" required></textarea>
+                            <!-- বিস্তারিত ঠিকানা -->
+                            <div class="mb-3 mt-4">
+                                <label class="form-label fw-bold">বিস্তারিত ঠিকানা *</label>
+                                <textarea class="form-control" id="detailed-address" rows="3" placeholder="বাসা/রোড নম্বর, বিল্ডিংয়ের নাম বা ল্যান্ডমার্ক লিখুন..." required></textarea>
+                            </div>
+                        </div>
                     </div>
-
+                    <!-- ডেলিভারি লোকেশন বক্স শেষ -->
                 </form>
             </div>
+
 
 
 
@@ -343,6 +367,7 @@
     </script>
     <script src="components.js"></script>
     <script src="products.js"></script>
+    <script src="bd-locations.js"></script>
     
 </body>
 
